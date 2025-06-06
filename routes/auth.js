@@ -114,7 +114,7 @@ router.get('/user/:id', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('users')
-      .select('id, username, birth_year, membership, payment_type, payment_bank, payment_info, payment_date, receipt_email')
+      .select('id, username, birth_year, membership, payment_type, payment_bank, payment_info, payment_date, receipt_email,recovery_email')
       .eq('id', id)
       .maybeSingle();
 
