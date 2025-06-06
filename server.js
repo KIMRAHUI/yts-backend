@@ -4,17 +4,20 @@ require('dotenv').config();
 
 const app = express();
 
-// 라우터 파일들 불러오기
+//  라우터 파일들 불러오기
 const commentsRouter = require('./routes/comments');
-const authRouter = require('./routes/auth'); // auth로 통일
+const authRouter = require('./routes/auth'); // 회원가입 + 로그인 통합
+const favoritesRouter = require('./routes/favorites'); // 찜 라우터 추가
 
 app.use(cors());
 app.use(express.json());
 
 //  라우터 등록
 app.use('/api/comments', commentsRouter);
-app.use('/api/auth', authRouter); //  회원가입 + 로그인 통합 경로
+app.use('/api/auth', authRouter);
+app.use('/api/favorites', favoritesRouter); // 찜 등록
 
+//  서버 실행
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ 서버 실행 중: http://localhost:${PORT}`);
