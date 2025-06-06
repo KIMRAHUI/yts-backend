@@ -70,4 +70,41 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// ✅ 결제 정보 및 멤버십 업데이트
+router.patch('/update-payment', async (req, res) => {
+  const {
+    id,
+    membership,
+    payment_type,
+    payment_bank,
+    payment_info,
+    payment_date,
+    receipt_email
+  } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('users')
+      .update({
+        membership,
+        payment_type,
+        payment_bank,
+        payment_info,
+        payment_date,
+        receipt_email
+      })
+      .eq('id', id)
+      .select()
+      .maybeSingle();
+
+    if (error) throw error;
+
+    res.json({ message: '✅ 결제 정보 업데이트 완료', data });
+
+  } catch (err) {
+    console.error('❌ 결제 정보 업데이트 실패:', err.message);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+  }
+});
+
 module.exports = router;
