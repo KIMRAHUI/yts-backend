@@ -18,7 +18,7 @@ app.use(cors({
     'http://localhost:5173',                 // 로컬 개발 환경
     'https://yts-ott.vercel.app'  // 배포된 프론트 주소 (필요시 교체/추가)
   ],
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   credentials: true, // 인증 관련 요청 시 true로 설정할 수도 있음
 }));
 
