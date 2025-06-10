@@ -50,7 +50,7 @@ yts-backend/
 
 ## 📡 주요 API 엔드포인트
 
-### ✅ Auth 관련 (`/api/auth`)
+### ✅ Auth 관련 (`routes/auth.js`)
 | Method | Endpoint             | 설명 |
 |--------|----------------------|------|
 | POST   | `/signup`            | 회원가입 |
@@ -58,7 +58,7 @@ yts-backend/
 | GET    | `/user/:id`          | 유저 정보 조회 |
 | PATCH  | `/update-payment`    | 결제 및 멤버십 정보 수정 |
 
-### ✅ Comments 관련 (`/api/comments`)
+### ✅ Comments 관련 (`routes/comments.js`)
 | Method | Endpoint             | 설명 |
 |--------|----------------------|------|
 | GET    | `/:movie_id`         | 영화별 댓글 목록 조회 |
