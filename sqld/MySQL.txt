@@ -1,0 +1,45 @@
+-- 🔁 기존 comments 테이블 제거
+DROP TABLE IF EXISTS comments;
+
+-- ✅ 댓글 테이블 생성
+CREATE TABLE comments (
+  id CHAR(36) PRIMARY KEY DEFAULT (UUID()),  -- UUID 자동 생성
+  user_id CHAR(36) NOT NULL,                 -- 외래키 대상 ID (users.id)
+  username VARCHAR(255) NOT NULL,
+  movie_id VARCHAR(50) NOT NULL,
+  content TEXT NOT NULL,
+  rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 🔍 정렬 최적화를 위한 인덱스
+CREATE INDEX idx_comments_movie_id ON comments(movie_id);
+CREATE INDEX idx_comments_user_id ON comments(user_id);
+CREATE INDEX idx_comments_created_at ON comments(created_at);
+
+-- -- 예시 데이터 삽입 (선택)
+-- INSERT INTO comments (user_id, username, movie_id, content, rating)
+-- VALUES ('some-user-id', 'kimrahui', '2001', '좋은 영화였어요!', 5);
+
+
+-- 🔁 기존 users 테이블 제거
+DROP TABLE IF EXISTS users;
+
+-- ✅ 사용자 테이블 생성
+CREATE TABLE users (
+  id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  username VARCHAR(255) NOT NULL,
+  tel VARCHAR(20),  -- 추천: phone_number 로 명명
+  birth_year INT,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  -- 아래 컬럼은 ALTER 대신 직접 포함 가능
+  recovery_email VARCHAR(255),
+  membership VARCHAR(50),
+  payment_type VARCHAR(50),
+  payment_bank VARCHAR(50),
+  payment_info VARCHAR(255),
+  payment_date VARCHAR(50),   -- 실제는 DATE 또는 TIMESTAMP 권장
+  receipt_email VARCHAR(255)
+);

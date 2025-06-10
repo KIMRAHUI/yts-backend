@@ -1,0 +1,51 @@
+
+
+DROP TABLE IF EXISTS comments;
+
+CREATE TABLE comments (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id uuid NOT NULL,
+  username text NOT NULL,
+  movie_id text NOT NULL,
+  content text NOT NULL,
+  rating integer NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- created_at 자동정렬을 위한 인덱스 생성 (선택사항)
+CREATE INDEX idx_comments_movie_id ON comments(movie_id);
+CREATE INDEX idx_comments_user_id ON comments(user_id);
+CREATE INDEX idx_comments_created_at ON comments(created_at);
+
+-- 예시 데이터 삽입 (선택)
+-- INSERT INTO comments (user_id, username, movie_id, content, rating)
+-- VALUES ('some-user-id', 'kimrahui', '2001', '좋은 영화였어요!', 5);
+
+
+-- 🔁 users 테이블을 완전히 새로 생성하는 경우
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  username text NOT NULL,
+  tel text,
+  birth_year integer,
+  password text NOT NULL,  -- ✅ 비밀번호 컬럼 추가됨
+  created_at timestamp with time zone DEFAULT now()
+);
+
+ALTER TABLE users
+ADD COLUMN recovery_email text;
+
+
+ALTER TABLE users
+ADD COLUMN membership TEXT,
+ADD COLUMN payment_type TEXT,
+ADD COLUMN payment_bank TEXT,
+ADD COLUMN payment_info TEXT,
+ADD COLUMN payment_date TEXT,
+ADD COLUMN receipt_email TEXT;
+
+
+
